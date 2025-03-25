@@ -1,0 +1,100 @@
+<div class="container-fluid weather-app">
+  <!-- Video background -->
+  <div class="video-background">
+    <video autoplay loop muted playsinline preload="auto">
+      <source src="../assets/cloudy.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="calendar" (click)="picker.open()">
+      <i class="bi bi-calendar"></i>
+      <!-- Trigger the open method -->
+      Select Date
+      <mat-form-field appearance="fill">
+        <mat-label>Start date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [max]="maxDate"
+          (dateChange)="onDateChange($event)"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Current Weather Section -->
+  <div class="upper-section">
+    <!-- <div class="current-weather">
+      <h1 class="temperature">26°C</h1>
+      <p class="condition">Cloudy</p>
+      <p class="date">Sunday | 12 Dec 2023</p>
+    </div> -->
+    <div class="current-weather">
+      <h1 class="temperature">
+        {{ weatherData?.items[0]?.forecasts[0]?.temperature.high }}°C
+      </h1>
+      <p class="condition">
+        {{ weatherData?.items[0]?.forecasts[0]?.forecast }}
+      </p>
+      <p className="date">
+        {{ formattedDate }}
+      </p>
+    </div>
+    <div class="weather-icon">
+      <img src="assets/cloud.svg" alt="Cloud Icon" />
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="lower-section">
+    <div class="sidebar col">
+      <a href="#" class="nav-link text-white text-center">
+        <i class="bi bi-cloud-sun"></i>
+        <p>Humidity</p>
+      </a>
+      <a href="#" class="nav-link text-white text-center">
+        <i class="bi bi-table"></i>
+        <p>Table</p>
+      </a>
+
+      <a
+        href="javascript:void(0)"
+        class="nav-link text-white text-center"
+        (click)="refreshPage()"
+      >
+        <i class="bi bi-arrow-clockwise"></i>
+        <p>Refresh</p>
+      </a>
+
+      <a href="#" class="nav-link text-white text-center">
+        <i class="bi bi-gear"></i>
+        <p>Settings</p>
+      </a>
+    </div>
+
+    <!-- Humidity Chart -->
+    <div class="humidity-chart forecast mt-4 col-9">
+      <h5>Humidity Trend</h5>
+      <div class="chart">
+        <highcharts-chart
+          [Highcharts]="Highcharts"
+          [options]="chartOptions"
+        ></highcharts-chart>
+      </div>
+    </div>
+    <!-- Weather Details -->
+    <div class="weather-details mt-4 col-2">
+      <h5>Air Conditions</h5>
+      <ul>
+        <li><strong>Real Feel:</strong> 30°C</li>
+        <li><strong>Wind:</strong> 0.8 km/hr</li>
+        <li><strong>Chance of Rain:</strong> 2%</li>
+        <li><strong>UV Index:</strong> 4</li>
+      </ul>
+    </div>
+  </div>
+</div>
